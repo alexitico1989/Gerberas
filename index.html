@@ -3,7 +3,10 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
 <title>Para Tami 🌼</title>
+
+<link href="https://fonts.googleapis.com/css2?family=Great+Vibes&family=Cormorant+Garamond:wght@300;400;500;600&display=swap" rel="stylesheet">
 
 <style>
 
@@ -14,76 +17,179 @@
 }
 
 body{
-    background: linear-gradient(135deg,#1a1a2e,#16213e,#0f3460);
-    min-height:100vh;
     overflow:hidden;
+    background:
+    radial-gradient(circle at top,#31456a 0%,#17233c 40%,#0b1220 100%);
+    height:100vh;
+    color:white;
+    font-family:'Cormorant Garamond',serif;
+}
+
+#particles{
+    position:fixed;
+    inset:0;
+    overflow:hidden;
+    pointer-events:none;
+}
+
+.particle{
+    position:absolute;
+    width:4px;
+    height:4px;
+    background:white;
+    border-radius:50%;
+    opacity:.3;
+    animation:float 15s linear infinite;
+}
+
+@keyframes float{
+    from{
+        transform:translateY(100vh);
+    }
+    to{
+        transform:translateY(-100px);
+    }
+}
+
+.scene{
+    position:absolute;
+    inset:0;
     display:flex;
+    flex-direction:column;
     justify-content:center;
     align-items:center;
-    font-family:Arial, Helvetica, sans-serif;
-    color:white;
-}
-
-.container{
     text-align:center;
-    z-index:10;
-    padding:20px;
+    padding:30px;
+    opacity:0;
+    pointer-events:none;
+    transition:1.2s;
 }
 
-h1{
+.scene.active{
+    opacity:1;
+    pointer-events:auto;
+}
+
+.title{
+    font-family:'Great Vibes',cursive;
+    font-size:4rem;
     margin-bottom:20px;
-    font-size:2rem;
 }
 
-button{
-    background:#ffd166;
-    color:#222;
+.text{
+    max-width:700px;
+    font-size:1.5rem;
+    line-height:1.7;
+}
+
+.btn{
+    margin-top:35px;
+    padding:14px 32px;
     border:none;
-    padding:15px 35px;
-    border-radius:50px;
-    font-size:1.1rem;
+    border-radius:40px;
     cursor:pointer;
-    transition:0.3s;
+    font-size:1.1rem;
+    background:white;
+    color:#14213d;
+    transition:.3s;
 }
 
-button:hover{
+.btn:hover{
     transform:scale(1.05);
 }
 
-.hidden{
-    display:none;
-}
-
-#message{
-    max-width:700px;
-    margin-top:30px;
-    font-size:1.4rem;
-    line-height:1.8;
-}
-
 .flower{
+    position:relative;
+    width:180px;
+    height:180px;
+    margin-bottom:30px;
+    animation:sway 5s ease-in-out infinite;
+}
+
+@keyframes sway{
+    0%,100%{
+        transform:rotate(-2deg);
+    }
+    50%{
+        transform:rotate(2deg);
+    }
+}
+
+.petal{
     position:absolute;
-    top:-100px;
-    font-size:40px;
-    animation:fall linear forwards;
+    width:50px;
+    height:90px;
+    background:#ff8fab;
+    border-radius:50%;
+    left:65px;
+    top:15px;
+    transform-origin:25px 75px;
 }
 
-@keyframes fall{
-    from{
-        transform:translateY(-100px) rotate(0deg);
-        opacity:1;
-    }
+.center{
+    position:absolute;
+    width:55px;
+    height:55px;
+    background:#ffd166;
+    border-radius:50%;
+    left:62px;
+    top:62px;
+    z-index:2;
+}
 
-    to{
-        transform:translateY(120vh) rotate(360deg);
-        opacity:0;
+.garden{
+    position:absolute;
+    bottom:-20px;
+    width:100%;
+    display:flex;
+    justify-content:center;
+    gap:30px;
+}
+
+.smallFlower{
+    font-size:50px;
+    animation:move 4s ease-in-out infinite;
+}
+
+.smallFlower:nth-child(2){
+    animation-delay:1s;
+}
+.smallFlower:nth-child(3){
+    animation-delay:2s;
+}
+.smallFlower:nth-child(4){
+    animation-delay:3s;
+}
+
+@keyframes move{
+    0%,100%{
+        transform:translateY(0px);
+    }
+    50%{
+        transform:translateY(-10px);
     }
 }
 
-#signature{
+#secret{
+    display:none;
     margin-top:25px;
-    font-size:1.1rem;
-    opacity:.9;
+    font-size:1.3rem;
+    color:#ffeaa7;
+}
+
+.fadeIn{
+    animation:appear 2s forwards;
+}
+
+@keyframes appear{
+    from{
+        opacity:0;
+        transform:translateY(20px);
+    }
+    to{
+        opacity:1;
+        transform:translateY(0);
+    }
 }
 
 </style>
@@ -91,97 +197,144 @@ button:hover{
 
 <body>
 
-<div class="container">
+<div id="particles"></div>
 
-    <h1>🌼 Tengo algo para ti 🌼</h1>
+<!-- ESCENA 1 -->
 
-    <button id="openBtn">
-        Abrir
-    </button>
+<div class="scene active" id="scene1">
 
-    <div id="message" class="hidden"></div>
+<div class="flower">
+<div class="center"></div>
+</div>
 
-    <div id="signature" class="hidden">
-        Con cariño ❤️
-    </div>
+<h1 class="title">Hola Tami 🌼</h1>
+
+<p class="text">
+Hay algo que recordé de ti...
+</p>
+
+<button class="btn" onclick="nextScene(1)">
+Continuar
+</button>
+
+</div>
+
+<!-- ESCENA 2 -->
+
+<div class="scene" id="scene2">
+
+<h1 class="title">Una pequeña memoria</h1>
+
+<p class="text">
+Hace un tiempo me dijiste que tus flores favoritas eran las gerberas.
+<br><br>
+Y aunque parezca un detalle pequeño...
+yo no lo olvidé.
+</p>
+
+<button class="btn" onclick="nextScene(2)">
+Seguir
+</button>
+
+</div>
+
+<!-- ESCENA 3 -->
+
+<div class="scene" id="scene3">
+
+<h1 class="title">Entonces pensé...</h1>
+
+<p class="text">
+Que aunque hoy no pueda entregarte unas de verdad,
+podía hacer algo distinto.
+<br><br>
+Algo sencillo.
+<br>
+Algo hecho especialmente para ti.
+</p>
+
+<button class="btn" onclick="nextScene(3)">
+Ver
+</button>
+
+</div>
+
+<!-- ESCENA 4 -->
+
+<div class="scene" id="scene4">
+
+<h1 class="title">Un jardín para ti 🌼</h1>
+
+<p class="text">
+Espero que tu noche sea tranquila,
+que la peque siga mejorando,
+y que encuentres aunque sea un pequeño motivo para sonreír hoy.
+</p>
+
+<div class="garden">
+<div class="smallFlower">🌼</div>
+<div class="smallFlower">🌼</div>
+<div class="smallFlower">🌼</div>
+<div class="smallFlower">🌼</div>
+</div>
+
+<button class="btn" onclick="showSecret()">
+🌼 ¿Por qué gerberas?
+</button>
+
+<div id="secret">
+Porque las personas importantes suelen quedarse
+en los detalles pequeños...
+y yo recordé éste.
+<br><br>
+❤️ Alexis
+</div>
 
 </div>
 
 <script>
 
-const btn = document.getElementById("openBtn");
-const message = document.getElementById("message");
-const signature = document.getElementById("signature");
+for(let i=0;i<80;i++){
 
-const text = `
-Hola Tami 😊
+    const p=document.createElement('div');
+    p.className='particle';
 
-Recordé que una vez me dijiste que tus flores favoritas eran las gerberas.
+    p.style.left=Math.random()*100+'vw';
+    p.style.animationDuration=(10+Math.random()*15)+'s';
+    p.style.opacity=Math.random()*0.5;
 
-Así que aunque hoy no pueda entregarte unas de verdad,
-quise dejarte este pequeño detallito ❤️. 
+    document.getElementById('particles').appendChild(p);
+}
 
-Y para que no falten las flores...
+for(let i=0;i<12;i++){
 
-🌼🌼🌼
+    const petal=document.createElement('div');
 
-Un abrazote a la distancia.
-`;
+    petal.className='petal';
 
-btn.addEventListener("click", ()=>{
+    petal.style.transform=
+    `rotate(${i*30}deg)`;
 
-    btn.style.display = "none";
+    document.querySelector('.flower').appendChild(petal);
+}
 
-    createFlowers();
+function nextScene(num){
 
-    message.classList.remove("hidden");
+    document
+    .getElementById('scene'+num)
+    .classList.remove('active');
 
-    let i = 0;
+    document
+    .getElementById('scene'+(num+1))
+    .classList.add('active');
+}
 
-    function typeWriter(){
+function showSecret(){
 
-        if(i < text.length){
+    const secret=document.getElementById('secret');
 
-            message.innerHTML += text.charAt(i);
-            i++;
-
-            setTimeout(typeWriter,40);
-
-        }else{
-
-            signature.classList.remove("hidden");
-
-        }
-
-    }
-
-    typeWriter();
-
-});
-
-function createFlowers(){
-
-    setInterval(()=>{
-
-        const flower = document.createElement("div");
-
-        flower.classList.add("flower");
-
-        flower.innerHTML = "🌼";
-
-        flower.style.left = Math.random()*100 + "vw";
-
-        flower.style.animationDuration =
-            (Math.random()*4 + 5) + "s";
-
-        document.body.appendChild(flower);
-
-        setTimeout(()=>{
-            flower.remove();
-        },9000);
-
-    },250);
-
+    secret.style.display='block';
+    secret.classList.add('fadeIn');
 }
 
 </script>
